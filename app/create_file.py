@@ -26,20 +26,19 @@ def main() -> None:
         if f_index + 1 >= len(file_data):
             raise Exception("No file name provided.")
 
-        new_file_name = file_data[f_index + 1]
+        content = datetime.datetime.now().strftime("%Y-%m-%d %H:%m:%S") + "\n"
 
-        with open(os.path.join(*directories, new_file_name), "a") as new_file:
-            new_file.write(
-                datetime.datetime.now().strftime("%Y-%m-%d %H:%m:%S") + "\n"
-            )
+        content_line = input("Enter content line: ")
+        line_number = 1
+        while content_line != "stop":
+            content += f"{line_number} {content_line}\n"
+            line_number += 1
             content_line = input("Enter content line: ")
-            line_number = 1
-            while content_line != "stop":
-                new_file.write(f"{line_number} {content_line}\n")
-                line_number += 1
-                content_line = input("Enter content line: ")
+        content += "\n"
 
-            new_file.write("\n")
+        new_file_name = file_data[f_index + 1]
+        with open(os.path.join(*directories, new_file_name), "a") as new_file:
+            new_file.write(content)
 
 
 if __name__ == "__main__":
